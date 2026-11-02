@@ -1,0 +1,18 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+*.sqlite
+*.sqlite-*
+.tally/
+
+# Trạng thái làm việc của agent trên máy này, KHÔNG thuộc sản phẩm.
+# .claude/metrics/prompts/*.jsonl và .claude/cache/turn-index.tsv có chứa
+# nguyên văn lời nhắn — không bao giờ được đẩy lên repo công khai.
+.claude/
+.aura/
+.hallmark/
+
+# Bản đối chiếu thiết kế Stitch: ảnh chụp từ dữ liệu thật, và đã cũ hơn giao diện
+# hiện tại. Giữ trên máy, không đưa vào repo công khai.
+design/

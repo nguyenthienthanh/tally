@@ -1,0 +1,58 @@
+{
+  "name": "@nguyenthienthanh/tally",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Local Claude Code usage dashboard: plan limits, credits, cost, and who is really driving the tool calls. Reads your transcripts on your machine and sends nothing anywhere.",
+  "keywords": [
+    "claude-code",
+    "claude",
+    "usage",
+    "dashboard",
+    "analytics",
+    "tokens",
+    "credits",
+    "cost",
+    "plan-limit",
+    "rate-limit",
+    "subagent",
+    "cli",
+    "local-first",
+    "privacy",
+    "sqlite",
+    "anthropic",
+    "ccusage"
+  ],
+  "homepage": "https://github.com/nguyenthienthanh/tally#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyenthienthanh/tally.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nguyenthienthanh/tally/issues"
+  },
+  "author": "Ethan Nguyen (https://github.com/nguyenthienthanh)",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "bin": {
+    "tally": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.check.json",
+    "doctor": "node dist/cli.js doctor",
+    "index": "node dist/cli.js index",
+    "report": "node dist/cli.js report",
+    "serve": "node dist/cli.js serve"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.5"
+  }
+}

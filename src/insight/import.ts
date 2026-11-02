@@ -1,0 +1,15 @@
+import { readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
+
+/** Tìm báo cáo `/insights` có sẵn (AC-9b.8) — đọc, không tốn hạn mức nào. Mới nhất trước. */
+export function findExistingReports(dir: string): Array<{ path: string; mtime: number }> {
+  let names: string[]
+  try { names = readdirSync(dir) } catch { return [] }
+  const out: Array<{ path: string; mtime: number }> = []
+  for (const n of names) {
+    if (!/^report.*\.(html|md)$/.test(n)) continue
+    const p = join(dir, n)
+    try { out.push({ path: p, mtime: statSync(p).mtimeMs }) } catch { /* bỏ */ }
+  }
+  return out.sort((a, b) => b.mtime - a.mtime)
+}
