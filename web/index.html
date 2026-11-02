@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tally</title>
+<meta name="description" content="Reads your Claude Code transcripts on your own machine and shows where the plan went, which sessions are running, and what is being wasted. Nothing is sent anywhere.">
+<!--TALLY_TOKEN-->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 20'%3E%3Crect x='0' y='2' width='2.6' height='16' fill='%239FA5AB'/%3E%3Crect x='4.4' y='2' width='2.6' height='16' fill='%239FA5AB'/%3E%3Crect x='8.8' y='2' width='2.6' height='16' fill='%239FA5AB'/%3E%3Crect x='13.2' y='2' width='2.6' height='16' fill='%239FA5AB'/%3E%3Crect x='-1' y='8.7' width='19' height='2.6' fill='%23F0B24A' transform='rotate(-20 8.5 10)'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#dashboard" aria-label="tally">
+    <!-- Four strokes and a slash: how people count by hand, and what this tool does.
+         The slash is amber, because amber means a person. -->
+    <svg class="mark" viewBox="0 0 22 20" aria-hidden="true">
+      <rect x="0" y="2" width="2.6" height="16" class="m1"/>
+      <rect x="4.4" y="2" width="2.6" height="16" class="m1"/>
+      <rect x="8.8" y="2" width="2.6" height="16" class="m1"/>
+      <rect x="13.2" y="2" width="2.6" height="16" class="m1"/>
+      <rect x="-1" y="8.7" width="19" height="2.6" class="mk" transform="rotate(-20 8.5 10)"/>
+    </svg>
+    <span class="word">tally</span>
+  </a>
+  <nav class="tabs" role="tablist">
+    <button class="tab" type="button" data-page="dashboard" data-testid="tab-dashboard" data-i18n="nav.dashboard">Dashboard</button>
+    <button class="tab" type="button" data-page="analytics" data-testid="tab-analytics" data-i18n="nav.analytics">Analytics</button>
+    <button class="tab" type="button" data-page="sessions" data-testid="tab-sessions" data-i18n="nav.sessions">Sessions</button>
+    <button class="tab" type="button" data-page="insight" data-testid="tab-insight" data-i18n="nav.insight">Insight</button>
+    <button class="tab" type="button" data-page="summary" data-testid="tab-summary" data-i18n="nav.summary">Summary</button>
+  </nav>
+  <div class="langs" data-testid="lang-switcher">
+    <button class="lang flag" type="button" data-lang="vi" lang="vi"><svg class="glyph" viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" fill="#da251d"/><path fill="#ff0" d="m12 3.6 1.3 4h4.2l-3.4 2.5 1.3 4-3.4-2.5-3.4 2.5 1.3-4L6.5 7.6h4.2z"/></svg>Tiếng Việt</button>
+    <button class="lang flag" type="button" data-lang="zh" lang="zh"><svg class="glyph" viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" fill="#de2910"/><path fill="#ffde00" d="m5 2.4 1 3.1h3.3L6.6 7.4l1 3.1L5 8.6l-2.6 1.9 1-3.1L.7 5.5H4z"/><circle cx="11.5" cy="2.6" r="1" fill="#ffde00"/><circle cx="13.6" cy="4.8" r="1" fill="#ffde00"/><circle cx="13.6" cy="7.8" r="1" fill="#ffde00"/><circle cx="11.5" cy="9.8" r="1" fill="#ffde00"/></svg>中文</button>
+    <button class="lang flag" type="button" data-lang="en" lang="en"><svg class="glyph" viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" fill="#012169"/><path stroke="#fff" stroke-width="3" d="M0 0l24 16M24 0L0 16"/><path stroke="#c8102e" stroke-width="1.8" d="M0 0l24 16M24 0L0 16"/><path stroke="#fff" stroke-width="5" d="M12 0v16M0 8h24"/><path stroke="#c8102e" stroke-width="3" d="M12 0v16M0 8h24"/></svg>English</button>
+  </div>
+</header>
+<div class="scopebar" id="scopebar" data-testid="scopebar" hidden></div>
+<main><div class="wrap" id="app" data-testid="app"><p class="muted">loading…</p></div></main>
+<footer class="foot"><div class="wrap">
+  <span data-i18n="foot.privacy">Read locally. Nothing is sent to the internet. Message text is never read: only tool names, shell verbs and file extensions.</span>
+</div></footer>
+<dialog id="consent" data-testid="consent-dialog">
+  <h3 data-i18n="insight.consentTitle">This will use your own Claude</h3>
+  <p id="consent-body" data-testid="consent-body"></p>
+  <div class="field">
+    <span class="flabel" data-i18n="ex.outLang">Output language</span>
+    <div class="seg" data-testid="ex-lang" role="group">
+      <button class="segbtn" type="button" data-exlang="vi" lang="vi">Tiếng Việt</button>
+      <button class="segbtn" type="button" data-exlang="zh" lang="zh">中文</button>
+      <button class="segbtn" type="button" data-exlang="en" lang="en">English</button>
+    </div>
+  </div>
+  <div class="field">
+    <span class="flabel" data-i18n="ex.depth">Depth</span>
+    <div class="seg" data-testid="ex-depth" role="group">
+      <button class="segbtn" type="button" data-exdepth="brief" data-i18n="ex.brief">Brief (3 points)</button>
+      <button class="segbtn" type="button" data-exdepth="full" data-i18n="ex.full">Full (6 points)</button>
+    </div>
+  </div>
+  <p id="consent-cost" class="muted colnote" data-testid="consent-cost"></p>
+  <div class="row">
+    <button id="consent-no" class="btn" type="button" data-testid="consent-no" data-i18n="common.cancel">Cancel</button>
+    <button id="consent-yes" class="btn btn--primary" type="button" data-testid="consent-yes" data-i18n="common.agree">Agree, run it</button>
+  </div>
+  <p id="consent-status" class="muted" data-testid="consent-status"></p>
+</dialog>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

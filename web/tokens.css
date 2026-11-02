@@ -1,0 +1,89 @@
+/* tally: the Console theme, in two colourways.
+ *
+ * Console ships with one dial: graphite (dark ground) and paper (light ground). Graphite
+ * is the default because it is the material itself; paper switches on when the machine asks
+ * for a light ground. In BOTH colourways, amber means A PERSON and cool blue means AN
+ * INSTRUMENT. Swapping those two meanings makes the theme lie.
+ *
+ * Fonts come from ./fonts.css, copied locally, because the page makes no network call.
+ */
+
+:root {
+  color-scheme: dark light;
+
+  /* the shared scale, identical in both colourways */
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px;
+  --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.125rem;
+  --text-xl: 1.266rem; --text-2xl: 1.424rem; --text-3xl: 1.602rem;
+  --text-display-s: 2.4rem; --text-display: 4.6rem; --text-section: 1.424rem;
+  --text-title: 1.125rem; --text-lead: 1.0625rem;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 160ms; --dur-long: 420ms;
+  --container: 1180px; --gutter: 48px; --gap-columns: 32px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300;
+  --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  --trail-indent: var(--space-lg); --rank-size: 22px;
+  --radius-card: 10px; --radius-pill: 6px; --radius-chip: 4px; --rule-hair: 1px;
+  --shadow-card: none;
+  --tracking-display: -0.03em; --display-weight: 500;
+
+  /* Be Vietnam Pro replaces the Host Grotesk that Console names: Host Grotesk has no
+     vietnamese subset, so 38 of 40 accented characters render as boxes. Full reason in fonts.css. */
+  --font-display: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-display);
+  --font-outlier: "Atkinson Hyperlegible Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* -- graphite (default) --------------------------------------------------- */
+  --color-paper: oklch(17% 0.008 250);
+  --color-paper-2: oklch(21% 0.009 250);
+  --color-paper-3: oklch(13.5% 0.007 250);
+  --color-ink: oklch(95% 0.005 250);
+  --color-ink-2: oklch(83% 0.008 250);
+  --color-muted: oklch(71% 0.01 250);
+  --color-rule: oklch(31% 0.01 250);
+  --color-rule-2: oklch(42% 0.012 250);
+  /* rule-2 is the spine of a stroke and of a selected row: decoration, not a control
+     border. Buttons and inputs need their own token at 3:1, or the button loses its edge. */
+  --color-control-edge: oklch(58% 0.013 250);
+  --color-accent: oklch(82% 0.15 80);
+  --color-accent-ink: oklch(18% 0.04 75);
+  --color-accent-soft: oklch(29% 0.05 80);
+  --color-focus: oklch(82% 0.15 80);
+  --color-cool: oklch(77% 0.12 245);
+  --color-cool-soft: oklch(29% 0.05 245);
+  --color-ok: oklch(76% 0.15 150);
+  --color-ok-soft: oklch(24.5% 0.03 150);
+  --color-bad: oklch(70% 0.17 25);
+  --color-bad-soft: oklch(24.5% 0.035 25);
+  --color-success: var(--color-ok);
+  --color-error: var(--color-bad);
+  --color-scrim: oklch(13.5% 0.007 250 / 0.72);
+}
+
+/* -- paper: Console's second colourway, for machines that prefer a light ground ---- */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-paper: oklch(98% 0.006 85);
+    --color-paper-2: oklch(95.5% 0.006 80);
+    --color-paper-3: oklch(92.5% 0.007 80);
+    --color-ink: oklch(19% 0.010 60);
+    --color-ink-2: oklch(34% 0.012 60);
+    --color-muted: oklch(47% 0.012 65);
+    --color-rule: oklch(87% 0.008 75);
+    --color-rule-2: oklch(74% 0.011 75);
+    --color-control-edge: oklch(58% 0.014 75);
+    --color-accent: oklch(50% 0.14 70);
+    --color-accent-ink: oklch(99% 0.008 85);
+    --color-accent-soft: oklch(93% 0.045 78);
+    --color-focus: oklch(50% 0.14 70);
+    --color-cool: oklch(52% 0.14 250);
+    --color-cool-soft: oklch(93% 0.035 245);
+    --color-ok: oklch(48% 0.13 150);
+    --color-ok-soft: oklch(93% 0.035 150);
+    --color-bad: oklch(50% 0.18 25);
+    --color-bad-soft: oklch(94% 0.03 25);
+    --color-scrim: oklch(19% 0.010 60 / 0.5);
+  }
+}

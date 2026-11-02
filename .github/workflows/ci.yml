@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 22.13 is the first release where `node:sqlite` works without an experimental flag
+        # (22.5 ships the module but needs --experimental-sqlite). 24 and 26 catch regressions.
+        node: ['22.13', '24', '26']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 11 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '${{ matrix.node }}', cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 11 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '26', cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      # e2e needs an index with data, and CI has no ~/.claude, so build the SYNTHETIC fixture.
+      - run: node scripts/make-fixture.mjs
+      - run: node dist/cli.js index
+      - run: pnpm exec playwright test

@@ -1,0 +1,18 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+*.sqlite
+*.sqlite-*
+.tally/
+
+# Agent working state on this machine. Not part of the product.
+# .claude/metrics/prompts/*.jsonl and .claude/cache/turn-index.tsv hold verbatim
+# prompts, so they must never reach a public repo.
+.claude/
+.aura/
+.hallmark/
+
+# Stitch design comparisons: screenshots of real data, and older than the current
+# interface. Kept locally, never published.
+design/
